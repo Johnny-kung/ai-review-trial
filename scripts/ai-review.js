@@ -27,7 +27,7 @@ Please provide your review.`;
             { role: "user", content: userMessage }
         ]
     };
-
+    console.log('anthropicApiKey');
     try {
         const response = await axios.post('https://api.anthropic.com/v1/messages', payload, {
             headers: {
