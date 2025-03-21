@@ -43,7 +43,12 @@ jobs:
           cat review.txt
 
       - name: Read Review Content
-        run: echo "REVIEW_CONTENT<<EOF" >> $GITHUB_ENV && cat review.txt >> $GITHUB_ENV && echo "EOF" >> $GITHUB_ENV
+        run: |
+          {
+            echo "REVIEW_CONTENT<<EOF"
+            cat review.txt
+            echo "EOF"
+          } >> "$GITHUB_ENV"
 
       - name: Comment on PR
         uses: actions/github-script@v3
