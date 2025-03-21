@@ -28,6 +28,9 @@ jobs:
         run: |
           git fetch origin ${{ github.event.pull_request.base.ref }}
           git diff origin/${{ github.event.pull_request.base.ref }} > pr_diff.txt
+      - name: install package
+        run: |
+          npm install
 
       - name: Call Claude API
         run: |
