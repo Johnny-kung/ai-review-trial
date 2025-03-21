@@ -38,7 +38,7 @@ Please provide your review.`;
         });
 
         const review = response.data.content[0].text;
-        fs.writeFileSync('claude_review.txt', review);
+        fs.writeFileSync('review.txt', review);
     } catch (error) {
         console.error("Failed to get review from Claude:", error.response?.data || error.message);
         process.exit(1);
