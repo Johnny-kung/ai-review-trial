@@ -1,0 +1,19 @@
+{
+  "name": "ai-review-trial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Johnny-kung/ai-review-trial.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Johnny-kung/ai-review-trial/issues"
+  },
+  "homepage": "https://github.com/Johnny-kung/ai-review-trial#readme"
+}

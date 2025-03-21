@@ -5,9 +5,8 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
   pull_request:
+    types: [ "opened" ]
     branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -25,12 +24,32 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Get Diff
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          git diff origin/${{ github.event.pull_request.base.ref }} > pr_diff.txt
+
+      - name: Call Claude API
+        run: |
+          node ./scripts/ai-review.js
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+        
+      - name: Show the review
+        run: |
+          cat review.txt
+
+      - name: Comment on PR
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: fs.readFileSync('review.txt', 'utf8')
+            })
+      
+
+
